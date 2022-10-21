@@ -11,15 +11,18 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private LayerMask _enemyLayers;
 
-    public void Attack()
+    public void Attack(int attackHash)
     {
-        _animator.SetTrigger("Attack");
+        _animator.SetTrigger(attackHash);
 
-        Collider2D[] hitEnemys =  Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayers);
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayers);
 
-        foreach (var enemy in hitEnemys)
+        foreach (Collider2D hitEnemy in hitEnemys)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(_attackPower);
+            if (hitEnemy.TryGetComponent(out Enemy enemy))
+            {
+                enemy.TakeDamage(_attackPower);
+            }
         }
     }
 

@@ -21,9 +21,11 @@ public class Player : MonoBehaviour
     private int _animatorIsJumpHash;
     private int _animatorSpeedHash;
     private int _animatorVerticalSpeedHash;
+    private int _animatorAttackHash;
 
     void Start()
     {
+        _animatorAttackHash = Animator.StringToHash("Attack");
         _animatorIsJumpHash = Animator.StringToHash("isJump");
         _animatorSpeedHash = Animator.StringToHash("Speed");
         _animatorVerticalSpeedHash = Animator.StringToHash("VerticalSpeed");
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            _playerCombat.Attack();
+            _playerCombat.Attack(_animatorAttackHash);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && OnGround)
